@@ -5,17 +5,17 @@ import SideBar from "./components/SideBar";
 
 function App() {
   return (
-    <>
+    <div className="bg-gray-100 h-screen">
       <NavBar />
       <div className="flex gap-2">
         <SideBar />
-        <div className="p-5">
+        <div className="p-5 flex-grow">
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
           </Routes>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

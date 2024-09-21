@@ -31,7 +31,7 @@ const stories = [
 
 const Stories = () => {
   return (
-    <div className="flex justify-center gap-2">
+    <div className="flex justify-center gap-2 ">
       {stories.map((data, index) => {
         return (
           <React.Fragment key={index}>
