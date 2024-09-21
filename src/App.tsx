@@ -4,14 +4,17 @@ import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 
 function App() {
-
   return (
     <>
-    <NavBar/>
-    <SideBar/>
-    <Routes>
-        <Route path="/" element={<HomePage/>}></Route>
-    </Routes>
+      <NavBar />
+      <div className="flex gap-2">
+        <SideBar />
+        <div className="p-5">
+          <Routes>
+            <Route path="/" element={<HomePage />}></Route>
+          </Routes>
+        </div>
+      </div>
     </>
   );
 }

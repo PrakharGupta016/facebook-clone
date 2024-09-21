@@ -42,7 +42,7 @@ const sideBarData = [
 ];
 const SideBar = () => {
   return (
-    <div className="p-2 flex flex-col max-w-[300px] ">
+    <div className="p-2 flex flex-col max-w-[300px]">
       {sideBarData.map((data, index) => {
         return (
           <React.Fragment key={index}>

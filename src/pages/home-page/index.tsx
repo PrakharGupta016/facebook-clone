@@ -1,6 +1,12 @@
+import Stories from "./Stories";
+
 const HomePage = () => {
   return <>
-      I am in homepage
+        <div className="overflow-y-auto h-screen flex mx-auto justify-center flex-grow">
+            <Stories/>
+
+        </div>
+
   </>;
 };
 export default HomePage;
