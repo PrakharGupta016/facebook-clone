@@ -1,36 +1,36 @@
-import React, { PropsWithChildren, useContext, useEffect, useState } from "react";
-import {auth} from "../../firebase";
-import { onAuthStateChanged,User } from "firebase/auth";
+import React, {
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { auth } from "../../firebase";
+import { onAuthStateChanged, User } from "firebase/auth";
 
 type AuthContextProps = {
-  user: User|null;
+  user: User | null;
   userLoggedIn: boolean;
   loading: boolean;
 };
 
-const AuthContext = React.createContext<AuthContextProps>(
-  {user: null,
+const AuthContext = React.createContext<AuthContextProps>({
+  user: null,
   userLoggedIn: false,
-  loading: true,}
-);
+  loading: true,
+});
 
-export const useAuth = ()=>{
-    return useContext(AuthContext);
-}
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, initializeUser);
-    return ()=>unsubscribe();
-  },[]);
-  const initializeUser = (user: User|null) => {
-    console.log('state changed')
-    if (user) {
-      setUser({ ...user });
+  const initializeUser = (user1: User | null) => {
+    if (user1) {
+      setUser({ ...user1 });
       setUserLoggedIn(true);
     } else {
       setUser(null);
@@ -38,6 +38,12 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
     setLoading(false);
   };
+  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, initializeUser);
+    return () => unsubscribe();
+  }, []);
+
   const value = {
     user,
     userLoggedIn,

@@ -19,6 +19,7 @@ function App() {
           <div className="p-5 flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Navigate to='/' />} /> 
             </Routes>
           </div>
         </div>
