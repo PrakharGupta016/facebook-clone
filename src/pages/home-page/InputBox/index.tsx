@@ -32,6 +32,7 @@ const InputBox = () => {
           {
             const uploadPhoto = ref(storage,`posts/${res.id}`)
             uploadString(uploadPhoto, photo,'data_url').then((snapshot) => {
+              onRemove();
                 getDownloadURL(uploadPhoto).then((url)=>{
                   setDoc(doc(db,`posts/${res.id}`),
                     {

@@ -14,7 +14,7 @@ function App() {
       <>
        
         <NavBar />
-        <div className="flex gap-0 sm:gap-2">
+        <div className="flex gap-0">
           <SideBar />
           <div className="p-5 flex-grow">
             <Routes>
