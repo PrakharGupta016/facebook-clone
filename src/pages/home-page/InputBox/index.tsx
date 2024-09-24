@@ -31,7 +31,7 @@ const InputBox = () => {
           if(photo)
           {
             const uploadPhoto = ref(storage,`posts/${res.id}`)
-            uploadString(uploadPhoto, photo).then((snapshot) => {
+            uploadString(uploadPhoto, photo,'data_url').then((snapshot) => {
                 getDownloadURL(uploadPhoto).then((url)=>{
                   setDoc(doc(db,`posts/${res.id}`),
                     {

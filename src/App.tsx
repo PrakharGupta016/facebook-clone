@@ -9,12 +9,12 @@ function App() {
     const {userLoggedIn}= useAuth();
 
   
-   return( <div className="bg-gray-100 h-screen">
+   return( <div className="bg-gray-100 h-screen overflow-y-auto">
     {userLoggedIn ? (
       <>
        
         <NavBar />
-        <div className="flex gap-2">
+        <div className="flex gap-0 sm:gap-2">
           <SideBar />
           <div className="p-5 flex-grow">
             <Routes>
