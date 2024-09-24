@@ -5,11 +5,10 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/24/solid";
 import { ChangeEventHandler, createRef, useRef, useState } from "react";
-import { db } from "../../../firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"; 
+import { db, storage } from "../../../firebase";
+import { collection, addDoc, serverTimestamp, setDoc, updateDoc, doc } from "firebase/firestore"; 
 import { useAuth } from "../../../contexts/authContext";
-import { timeStamp } from "console";
-
+import { ref, uploadBytes, getDownloadURL, uploadString } from 'firebase/storage';
 
 const InputBox = () => {
   const {user} = useAuth();
@@ -29,14 +28,25 @@ const InputBox = () => {
           email:user?.providerData[0].email,
           timeStamp: serverTimestamp()
       }).then((res)=>{
-        console.log('posted')
+          if(photo)
+          {
+            const uploadPhoto = ref(storage,`posts/${res.id}`)
+            uploadString(uploadPhoto, photo).then((snapshot) => {
+                getDownloadURL(uploadPhoto).then((url)=>{
+                  setDoc(doc(db,`posts/${res.id}`),
+                    {
+                        postImage :url
+                    },{merge:true}).then(res=>console.log(res))
+                })
+            });
+          }
         setPost("")
       })
 
   };
   
  
-  const fileHandler = (e:any)=>{
+  const addImage = (e:any)=>{
       const filereader = new FileReader;
       if(e.target.files[0])
       {
@@ -47,6 +57,9 @@ const InputBox = () => {
         setPhoto(readerEvent.target?.result as string)
       }
       
+  }
+  const onRemove = ()=>{
+    setPhoto(null)
   }
   return (
     <div className="grid grid-cols-1 gap-2  p-2 shadow-md rounded-2xl text-gray-500 bg-white">
@@ -64,7 +77,8 @@ const InputBox = () => {
             value={post}
             onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setPost(e.target.value)}
           />
-          <button type='submit'>Submit</button>
+          <button hidden type='submit'>Submit</button>
+          {photo && <><img onClick={onRemove} src={photo} height={10} width={50}/></>}
         </form>
         
       </div>
@@ -77,7 +91,7 @@ const InputBox = () => {
         <div onClick={()=>fileRef.current?.click()}className="inputIcon">
           <CameraIcon className="h-7 text-green-600" />
           <p className="text-xs md:text-md lg:text-base">Photo/Video</p>
-          <input ref={fileRef} hidden type="file" onChange={fileHandler}/>
+          <input ref={fileRef} hidden type="file" onChange={addImage}/>
         </div>
         <div className="inputIcon">
           <FaceSmileIcon className="h-7 text-yellow-500" />
